@@ -11,24 +11,18 @@ export const metadata: Metadata = {
   openGraph: {
     title: "멘턴 - AI 시니어 파트너스",
     description: "시니어 전문가를 위한 안산시 AI 일자리 플랫폼",
-    url: "https://menturn.vercel.app",
-    siteName: "멘턴",
-    images: [
-      {
-        url: "https://menturn.vercel.app/menturn_og.png",
-        width: 1200,
-        height: 630,
-        alt: "멘턴 - AI 시니어 파트너스",
-      },
-    ],
-    locale: "ko_KR",
+    images: ["/menturn_og.png"],
     type: "website",
+    locale: "ko_KR",
   },
   twitter: {
     card: "summary_large_image",
     title: "멘턴 - AI 시니어 파트너스",
     description: "시니어 전문가를 위한 안산시 AI 일자리 플랫폼",
-    images: ["https://menturn.vercel.app/menturn_og.png"],
+    images: ["/menturn_og.png"],
+  },
+  icons: {
+    icon: "/mt_favicon.ico",
   },
 }
 
