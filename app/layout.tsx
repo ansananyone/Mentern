@@ -4,9 +4,37 @@ import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://menturn.vercel.app'),
   title: "멘턴 - AI 시니어 파트너스",
-  description: "경력 20년 이상 시니어 전문가를 위한 태스크 기반 일자리 플랫폼",
+  description: "시니어 전문가를 위한 안산시 AI 일자리 플랫폼",
   generator: "v0.app",
+  icons: {
+    icon: "/mt_favicon.ico",
+    shortcut: "/mt_favicon.ico",
+    apple: "/mt_favicon.ico",
+  },
+  openGraph: {
+    title: "멘턴 - AI 시니어 파트너스",
+    description: "시니어 전문가를 위한 안산시 AI 일자리 플랫폼",
+    url: "https://menturn.vercel.app",
+    siteName: "멘턴",
+    images: [
+      {
+        url: "/menturn_og.png",
+        width: 1200,
+        height: 630,
+        alt: "멘턴 - AI 시니어 파트너스",
+      },
+    ],
+    locale: "ko_KR",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "멘턴 - AI 시니어 파트너스",
+    description: "시니어 전문가를 위한 안산시 AI 일자리 플랫폼",
+    images: ["/menturn_og.png"],
+  },
 }
 
 export default function RootLayout({

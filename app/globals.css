@@ -11,21 +11,21 @@
   --card-foreground: #333333;
   --popover: #ffffff;
   --popover-foreground: #333333;
-  /* Key color - Green */
-  --primary: #22C55E;
-  --primary-foreground: #0F3B1F;
+  /* Key color - Blue */
+  --primary: #386ADD;
+  --primary-foreground: #ffffff;
   --secondary: #f4f4f5;
   --secondary-foreground: #333333;
   --muted: #f5f5f5;
   --muted-foreground: #737373;
-  --accent: #BBF7D0;
-  --accent-foreground: #0F3B1F;
+  --accent: #E0EDFF;
+  --accent-foreground: #1E3A8A;
   --destructive: #ef4444;
   --destructive-foreground: #ffffff;
   --border: #e5e5e5;
   --input: #e5e5e5;
-  --ring: #22C55E;
-  --chart-1: #22C55E;
+  --ring: #386ADD;
+  --chart-1: #386ADD;
   --chart-2: #3b82f6;
   --chart-3: #8b5cf6;
   --chart-4: #f59e0b;
@@ -40,9 +40,9 @@
   --card-foreground: #fafafa;
   --popover: #262626;
   --popover-foreground: #fafafa;
-  /* Key color - Green for dark mode */
-  --primary: #22C55E;
-  --primary-foreground: #0F3B1F;
+  /* Key color - Blue for dark mode */
+  --primary: #386ADD;
+  --primary-foreground: #ffffff;
   --secondary: #3f3f46;
   --secondary-foreground: #fafafa;
   --muted: #3f3f46;
@@ -53,8 +53,8 @@
   --destructive-foreground: #fafafa;
   --border: #3f3f46;
   --input: #3f3f46;
-  --ring: #22C55E;
-  --chart-1: #22C55E;
+  --ring: #386ADD;
+  --chart-1: #386ADD;
   --chart-2: #3b82f6;
   --chart-3: #8b5cf6;
   --chart-4: #f59e0b;
