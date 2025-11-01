@@ -156,7 +156,7 @@ export default function MenturnApp() {
 
   // 인트로 영상 표시 중
   if (showIntro) {
-    return (
+  return (
       <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#E6E6E6' }}>
         <div className="w-full max-w-[390px] flex items-center justify-center">
           <video
@@ -372,7 +372,7 @@ function HomeScreen({
   }
 
   if (loading) {
-    return (
+  return (
       <div className="min-h-full p-6 flex items-center justify-center">
         <p className="text-lg text-muted-foreground">로딩 중...</p>
       </div>
@@ -392,7 +392,7 @@ function HomeScreen({
             className="h-auto"
             priority
           />
-        </div>
+          </div>
         <p className="text-2xl font-bold leading-relaxed" style={{ color: '#0f172a' }}>
           안녕하세요, {profile?.name || '사용자'}님!
         </p>
@@ -430,7 +430,7 @@ function HomeScreen({
               <p className="text-2xl font-bold text-primary">
                 {profile?.kg_title?.[0] ? `${profile.kg_title[0]} 전문가` : '전문가'}
               </p>
-            </div>
+              </div>
 
             {/* 통계 그리드 */}
             <div className="grid grid-cols-3 gap-3 mb-4">
@@ -454,19 +454,19 @@ function HomeScreen({
                 </div>
                 <p className="text-xs text-muted-foreground mb-1">완료</p>
                 <p className="text-lg font-bold text-foreground">{profile?.total_completed_tasks || 0}건</p>
+                </div>
               </div>
-            </div>
 
             {/* 전문분야 */}
             <div className="bg-white rounded-xl p-3 border border-primary/10 mb-3">
               <div className="flex items-center gap-2 mb-1">
                 <Sparkles className="text-primary" size={14} />
                 <p className="text-xs font-medium text-muted-foreground">전문분야</p>
-              </div>
+                </div>
               <p className="text-sm font-semibold text-foreground">
                 {profile?.experience_summary || '경력 정보 없음'}
               </p>
-            </div>
+              </div>
 
             {/* 자격증 */}
             {profile?.certifications && profile.certifications.length > 0 && (
@@ -474,7 +474,7 @@ function HomeScreen({
                 {profile.certifications.map((cert: string, i: number) => (
                   <Badge key={i} className="bg-white text-primary text-xs px-3 py-1.5 font-medium border border-primary/30 hover:bg-primary/5 transition-colors">
                     {cert}
-                  </Badge>
+                </Badge>
                 ))}
               </div>
             )}
@@ -486,8 +486,8 @@ function HomeScreen({
         <div className="flex flex-col gap-2 mb-5">
           <Badge className="bg-transparent text-primary text-sm px-2.5 py-1 font-bold border border-primary/40 rounded-md flex items-center gap-1.5 w-fit">
             <Sparkles size={14} />
-            AI
-          </Badge>
+              AI
+            </Badge>
           <div className="flex items-center justify-between">
             <h3 className="text-2xl font-bold text-foreground">오늘의 추천 업무</h3>
             <span className="text-2xl font-bold text-primary ml-6">총 {tasks.length}건</span>
@@ -496,7 +496,7 @@ function HomeScreen({
 
         <div className="space-y-4">
           {tasks.map((task, index) => (
-            <TaskCard
+          <TaskCard
               key={task.id}
               id={task.id}
               company={task.org_display_name || '멘턴 파트너사'}
@@ -511,7 +511,7 @@ function HomeScreen({
               appliedTasks={appliedTasks}
               setAppliedTasks={setAppliedTasks}
               setScreen={setScreen}
-            />
+          />
           ))}
         </div>
 
@@ -612,22 +612,35 @@ function TaskCard({
   const { toast } = useToast()
 
   const handleApply = async () => {
+    console.log('=== 바로 지원하기 시작 ===')
+    console.log('Task ID:', id)
+    console.log('User ID:', CURRENT_USER_ID)
+    
     setApplying(true)
     try {
       // Supabase에 지원 내역 INSERT
+      const insertData = {
+        task_id: id,
+        user_id: CURRENT_USER_ID,
+        state: 'applied',
+        match_score: 95,
+        match_reason: '김철수님의 경력과 95% 매칭됩니다'
+      }
+      
+      console.log('INSERT 데이터:', insertData)
+      
       const { data, error } = await supabase
         .from('applications')
-        .insert({
-          task_id: id,
-          user_id: CURRENT_USER_ID,
-          state: 'applied',
-          match_score: 95,
-          match_reason: '김철수님의 경력과 95% 매칭됩니다'
-        })
+        .insert(insertData)
         .select()
         .single()
 
-      if (error) throw error
+      if (error) {
+        console.error('❌ Supabase INSERT 에러:', error)
+        throw error
+      }
+
+      console.log('✅ INSERT 성공:', data)
 
       // 로컬 상태 업데이트
       const newTask: TaskItem = {
@@ -649,15 +662,23 @@ function TaskCard({
         title: "지원 완료!",
         description: "태스크 지원이 성공적으로 접수되었습니다.",
       })
-    } catch (error) {
-      console.error('지원 실패:', error)
+    } catch (error: any) {
+      console.error('❌ 지원 실패:', error)
+      console.error('에러 상세:', {
+        message: error?.message,
+        details: error?.details,
+        hint: error?.hint,
+        code: error?.code
+      })
+      
       toast({
         title: "지원 실패",
-        description: "다시 시도해주세요.",
+        description: error?.message || "다시 시도해주세요.",
         variant: "destructive"
       })
     } finally {
       setApplying(false)
+      console.log('=== 바로 지원하기 종료 ===')
     }
   }
 
@@ -688,48 +709,48 @@ function TaskCard({
             </Badge>
           </div>
         )}
-        <div className="space-y-4">
-          <div>
-            <p className="text-base text-muted-foreground mb-2">{company}</p>
+      <div className="space-y-4">
+        <div>
+          <p className="text-base text-muted-foreground mb-2">{company}</p>
             <h4 className="text-xl font-bold text-foreground leading-relaxed group-hover:text-primary transition-colors">{title}</h4>
-          </div>
+        </div>
 
-          <div className="flex items-center gap-5 text-lg">
-            <div className="flex items-center gap-2 text-foreground">
+        <div className="flex items-center gap-5 text-lg">
+          <div className="flex items-center gap-2 text-foreground">
               <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center">
                 <Clock size={20} className="text-primary" />
               </div>
-              <span className="font-bold">{time}</span>
-            </div>
-            <div className="flex items-center gap-2 text-primary font-bold">
+            <span className="font-bold">{time}</span>
+          </div>
+          <div className="flex items-center gap-2 text-primary font-bold">
               <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center">
                 <DollarSign size={20} className="text-primary" />
               </div>
-              <span>{pay}</span>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <Badge variant="outline" className="text-sm px-3 py-1.5 font-medium border-primary/20 text-muted-foreground">
-              신체부담: {physical}
-            </Badge>
-            <Badge variant="outline" className="text-sm px-3 py-1.5 font-medium border-primary/20 text-muted-foreground">
-              기술수준: {skill}
-            </Badge>
-          </div>
-
-          <div className="flex flex-wrap gap-2">
-            {tags.map((tag, i) => (
-              <Badge
-                key={i}
-                className="bg-primary/10 text-primary hover:bg-primary/20 text-sm px-3 py-1.5 font-medium border border-primary/30 transition-colors"
-              >
-                {tag}
-              </Badge>
-            ))}
+            <span>{pay}</span>
           </div>
         </div>
-      </Card>
+
+        <div className="flex items-center gap-3">
+            <Badge variant="outline" className="text-sm px-3 py-1.5 font-medium border-primary/20 text-muted-foreground">
+            신체부담: {physical}
+          </Badge>
+            <Badge variant="outline" className="text-sm px-3 py-1.5 font-medium border-primary/20 text-muted-foreground">
+            기술수준: {skill}
+          </Badge>
+        </div>
+
+        <div className="flex flex-wrap gap-2">
+          {tags.map((tag, i) => (
+            <Badge
+              key={i}
+                className="bg-primary/10 text-primary hover:bg-primary/20 text-sm px-3 py-1.5 font-medium border border-primary/30 transition-colors"
+            >
+              {tag}
+            </Badge>
+          ))}
+        </div>
+      </div>
+    </Card>
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent className="sm:max-w-[360px] border border-primary/10">
@@ -1002,12 +1023,12 @@ function TasksScreen({
   }
 
   if (loading) {
-    return (
+  return (
       <div className="min-h-full p-6 flex items-center justify-center">
         <p className="text-lg text-muted-foreground">로딩 중...</p>
       </div>
-    )
-  }
+  )
+}
 
   return (
     <div className="min-h-full p-6 space-y-6 bg-linear-to-b from-primary/5 via-primary/3 to-background">
@@ -1023,8 +1044,8 @@ function TasksScreen({
           <p className="text-lg text-muted-foreground leading-relaxed">
             {profile?.name || '사용자'}님의 경력을 바탕으로 선별된 일자리입니다
           </p>
-        </div>
-        
+      </div>
+
         <Card className="p-4 bg-primary/5 border border-primary/20">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
@@ -1040,7 +1061,7 @@ function TasksScreen({
 
       <div className="space-y-4 pb-6">
         {tasks.map((task) => (
-          <TaskCard
+        <TaskCard
             key={task.id}
             id={task.id}
             company={task.org_display_name || '멘턴 파트너사'}
@@ -1054,7 +1075,7 @@ function TasksScreen({
             appliedTasks={appliedTasks}
             setAppliedTasks={setAppliedTasks}
             setScreen={setScreen}
-          />
+        />
         ))}
       </div>
     </div>
@@ -1333,7 +1354,7 @@ function ProfileScreen() {
   }
 
   if (loading) {
-    return (
+  return (
       <div className="min-h-full p-6 flex items-center justify-center">
         <p className="text-lg text-muted-foreground">로딩 중...</p>
       </div>
@@ -1355,14 +1376,14 @@ function ProfileScreen() {
             {/* 프로필 이미지 */}
             <div className="relative shrink-0">
               <div className="w-20 h-20 rounded-2xl bg-primary/10 flex items-center justify-center">
-                <User size={40} className="text-primary" />
-              </div>
+            <User size={40} className="text-primary" />
+          </div>
               {profile?.is_verified && (
                 <div className="absolute -bottom-1 -right-1 w-7 h-7 bg-white rounded-full flex items-center justify-center shadow-sm border border-primary/10">
                   <CheckCircle2 size={16} className="text-primary" />
-                </div>
+          </div>
               )}
-            </div>
+        </div>
 
             {/* 이름 및 직무 */}
             <div className="flex-1 min-w-0">
@@ -1486,8 +1507,8 @@ function ProfileScreen() {
                 {profile?.physical_constraints?.fulltime_difficult === true ? '어려움' : profile?.physical_constraints?.fulltime_difficult === false ? '가능' : '-'}
               </p>
             </div>
-          </div>
-        </Card>
+        </div>
+      </Card>
 
         {/* 희망 근무 조건 */}
         <Card className="p-5 border border-primary/10 shadow-md bg-white">
@@ -1528,8 +1549,8 @@ function ProfileScreen() {
                 {profile?.work_prefs?.remote_ok === true ? '가능' : profile?.work_prefs?.remote_ok === false ? '불가' : '-'}
               </span>
             </div>
-          </div>
-        </Card>
+        </div>
+      </Card>
       </div>
 
       <Button 
@@ -1864,7 +1885,7 @@ function HelpScreen() {
             <h3 className="text-xl font-bold text-foreground">고객센터</h3>
             <p className="text-base text-muted-foreground">
               궁금한 점을 문의하세요
-            </p>
+        </p>
           </div>
         </div>
         <Button className="w-full h-16 text-lg font-bold bg-primary/10 text-primary hover:bg-primary/15 border border-primary/20 rounded-xl transition-colors">
