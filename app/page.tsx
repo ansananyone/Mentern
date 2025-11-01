@@ -753,7 +753,7 @@ function TaskCard({
     </Card>
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="sm:max-w-[360px] border border-primary/10 p-0 max-h-[85vh] flex flex-col gap-0">
+        <DialogContent className="sm:max-w-[360px] border border-primary/10 p-0 max-h-[85vh] flex flex-col gap-0 overflow-hidden">
           <DialogHeader className="px-6 pt-6 pb-3 shrink-0">
             <DialogTitle className="text-2xl font-bold text-foreground mb-1">{title}</DialogTitle>
             <DialogDescription className="text-lg text-muted-foreground">
@@ -838,7 +838,7 @@ function TaskCard({
           </div>
 
           {/* 하단 고정 CTA 영역 */}
-          <div className="shrink-0 px-6 pb-6 pt-3 bg-background border-t border-primary/10 space-y-3">
+          <div className="shrink-0 px-6 pb-6 pt-3 border-t border-primary/10 space-y-3">
             {/* 전화 문의 */}
             {phone && (
               <a href={`tel:${phone}`} className="block">
