@@ -753,128 +753,133 @@ function TaskCard({
     </Card>
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="sm:max-w-[360px] border border-primary/10">
-          <DialogHeader>
+        <DialogContent className="sm:max-w-[360px] border border-primary/10 p-0 max-h-[85vh] flex flex-col gap-0">
+          <DialogHeader className="px-6 pt-6 pb-3 shrink-0">
             <DialogTitle className="text-2xl font-bold text-foreground mb-1">{title}</DialogTitle>
             <DialogDescription className="text-lg text-muted-foreground">
               {company}
             </DialogDescription>
           </DialogHeader>
           
-          <div className="space-y-4 py-2">
-            {/* 근무 정보 */}
-            <div className="space-y-3">
-              <div className="flex items-center gap-3 p-3 bg-primary/5 rounded-lg border border-primary/10">
-                <div className="w-11 h-11 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                  <Clock size={22} className="text-primary" />
+          {/* 스크롤 가능한 콘텐츠 영역 */}
+          <div className="overflow-y-auto flex-1 px-6 py-2" style={{ maxHeight: 'calc(85vh - 220px)' }}>
+            <div className="space-y-4">
+              {/* 근무 정보 */}
+              <div className="space-y-3">
+                <div className="flex items-center gap-3 p-3 bg-primary/5 rounded-lg border border-primary/10">
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                    <Clock size={20} className="text-primary" />
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-xs text-muted-foreground mb-0.5">근무 시간</p>
+                    <p className="text-base font-bold text-foreground">{time}</p>
+                  </div>
                 </div>
-                <div className="flex-1">
-                  <p className="text-sm text-muted-foreground mb-0.5">근무 시간</p>
-                  <p className="text-lg font-bold text-foreground">{time}</p>
+
+                <div className="flex items-center gap-3 p-3 bg-primary/5 rounded-lg border border-primary/10">
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                    <DollarSign size={20} className="text-primary" />
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-xs text-muted-foreground mb-0.5">급여</p>
+                    <p className="text-base font-bold text-primary">{pay}</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3 p-3 bg-primary/5 rounded-lg border border-primary/10">
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                    <Users size={20} className="text-primary" />
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-xs text-muted-foreground mb-0.5">현재 지원자</p>
+                    <p className="text-base font-bold text-foreground">{applicants}명</p>
+                  </div>
                 </div>
               </div>
 
-              <div className="flex items-center gap-3 p-3 bg-primary/5 rounded-lg border border-primary/10">
-                <div className="w-11 h-11 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                  <DollarSign size={22} className="text-primary" />
-                </div>
-                <div className="flex-1">
-                  <p className="text-sm text-muted-foreground mb-0.5">급여</p>
-                  <p className="text-lg font-bold text-primary">{pay}</p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-3 p-3 bg-primary/5 rounded-lg border border-primary/10">
-                <div className="w-11 h-11 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                  <Users size={22} className="text-primary" />
-                </div>
-                <div className="flex-1">
-                  <p className="text-sm text-muted-foreground mb-0.5">현재 지원자</p>
-                  <p className="text-lg font-bold text-foreground">{applicants}명</p>
-                </div>
-              </div>
-            </div>
-
-            {/* 조건 배지 */}
-            <div className="space-y-2">
-              <div className="flex gap-2">
-                <Badge variant="outline" className="text-base px-3 py-2 font-medium border-primary/20">
-                  신체부담: {physical}
-                </Badge>
-                <Badge variant="outline" className="text-base px-3 py-2 font-medium border-primary/20">
-                  기술수준: {skill}
-                </Badge>
-              </div>
-              
-              <div className="flex flex-wrap gap-2">
-                {tags.map((tag, i) => (
-                  <Badge
-                    key={i}
-                    className="bg-primary/10 text-primary text-base px-3 py-2 font-medium border border-primary/30"
-                  >
-                    {tag}
+              {/* 조건 배지 */}
+              <div className="space-y-2">
+                <div className="flex gap-2">
+                  <Badge variant="outline" className="text-sm px-2.5 py-1.5 font-medium border-primary/20">
+                    신체부담: {physical}
                   </Badge>
-                ))}
+                  <Badge variant="outline" className="text-sm px-2.5 py-1.5 font-medium border-primary/20">
+                    기술수준: {skill}
+                  </Badge>
+                </div>
+                
+                <div className="flex flex-wrap gap-2">
+                  {tags.map((tag, i) => (
+                    <Badge
+                      key={i}
+                      className="bg-primary/10 text-primary text-sm px-2.5 py-1.5 font-medium border border-primary/30"
+                    >
+                      {tag}
+                    </Badge>
+                  ))}
+                </div>
               </div>
+
+              {/* AI 추천 이유 */}
+              <Card className="p-3 bg-primary/5 border border-primary/10">
+                <div className="flex items-start gap-2.5">
+                  <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center shrink-0 mt-0.5">
+                    <Sparkles size={16} className="text-primary" />
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm font-bold text-foreground mb-1">AI 추천 이유</p>
+                    <p className="text-xs text-foreground/80 leading-relaxed">
+                      김철수님의 품질관리 30년 경력과 95% 매칭되며, 신체 부담이 낮아 적합합니다.
+                    </p>
+                  </div>
+                </div>
+              </Card>
             </div>
+          </div>
 
-            {/* AI 추천 이유 */}
-            <Card className="p-4 bg-primary/5 border border-primary/10">
-              <div className="flex items-start gap-3">
-                <div className="w-9 h-9 rounded-lg bg-primary/20 flex items-center justify-center shrink-0 mt-0.5">
-                  <Sparkles size={18} className="text-primary" />
-                </div>
-                <div className="flex-1">
-                  <p className="text-base font-bold text-foreground mb-1">AI 추천 이유</p>
-                  <p className="text-sm text-foreground/80 leading-relaxed">
-                    김철수님의 품질관리 30년 경력과 95% 매칭되며, 신체 부담이 낮아 적합합니다.
-                  </p>
-                </div>
-              </div>
-            </Card>
-
+          {/* 하단 고정 CTA 영역 */}
+          <div className="shrink-0 px-6 pb-6 pt-3 bg-background border-t border-primary/10 space-y-3">
             {/* 전화 문의 */}
             {phone && (
               <a href={`tel:${phone}`} className="block">
-                <Card className="p-4 bg-white border border-primary/20 hover:bg-primary/5 transition-colors cursor-pointer">
+                <Card className="p-3 bg-white border border-primary/20 hover:bg-primary/5 transition-colors cursor-pointer">
                   <div className="flex items-center gap-3">
-                    <div className="w-11 h-11 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
                         <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
                       </svg>
                     </div>
                     <div className="flex-1">
-                      <p className="text-sm text-muted-foreground mb-0.5">전화 문의</p>
-                      <p className="text-lg font-bold text-primary">{phone}</p>
+                      <p className="text-xs text-muted-foreground mb-0.5">전화 문의</p>
+                      <p className="text-base font-bold text-primary">{phone}</p>
                     </div>
                   </div>
                 </Card>
               </a>
             )}
-          </div>
 
-          <div className="pt-2">
+            {/* 바로 지원하기 버튼 */}
             {isApplied ? (
               <Button 
-                className="w-full h-14 text-lg font-bold bg-primary/5 border border-primary/20 rounded-xl opacity-60 cursor-not-allowed"
+                className="w-full h-12 text-base font-bold bg-primary/5 border border-primary/20 rounded-xl opacity-60 cursor-not-allowed"
                 style={{ color: '#1e3a8a' }}
                 disabled
               >
                 <span className="flex items-center justify-center gap-2">
-                  <CheckCircle2 size={20} />
+                  <CheckCircle2 size={18} />
                   <span>지원 완료</span>
                 </span>
               </Button>
             ) : (
               <Button 
-                className="w-full h-14 text-lg font-bold bg-primary/15 border border-primary/30 hover:bg-primary/25 transition-all rounded-xl group"
+                className="w-full h-12 text-base font-bold bg-primary/15 border border-primary/30 hover:bg-primary/25 transition-all rounded-xl group"
                 style={{ color: '#1e3a8a' }}
                 onClick={handleApply}
                 disabled={applying}
               >
                 <span className="flex items-center justify-center gap-2">
                   <span>{applying ? '지원 중...' : '바로 지원하기'}</span>
-                  {!applying && <ChevronRight className="transition-transform group-hover:translate-x-1" size={22} />}
+                  {!applying && <ChevronRight className="transition-transform group-hover:translate-x-1" size={20} />}
                 </span>
               </Button>
             )}
