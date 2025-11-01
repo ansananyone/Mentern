@@ -8,11 +8,6 @@ export const metadata: Metadata = {
   title: "멘턴 - AI 시니어 파트너스",
   description: "시니어 전문가를 위한 안산시 AI 일자리 플랫폼",
   generator: "v0.app",
-  icons: {
-    icon: "/mt_favicon.ico",
-    shortcut: "/mt_favicon.ico",
-    apple: "/mt_favicon.ico",
-  },
   openGraph: {
     title: "멘턴 - AI 시니어 파트너스",
     description: "시니어 전문가를 위한 안산시 AI 일자리 플랫폼",
@@ -20,7 +15,7 @@ export const metadata: Metadata = {
     siteName: "멘턴",
     images: [
       {
-        url: "/menturn_og.png",
+        url: "https://menturn.vercel.app/menturn_og.png",
         width: 1200,
         height: 630,
         alt: "멘턴 - AI 시니어 파트너스",
@@ -33,7 +28,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "멘턴 - AI 시니어 파트너스",
     description: "시니어 전문가를 위한 안산시 AI 일자리 플랫폼",
-    images: ["/menturn_og.png"],
+    images: ["https://menturn.vercel.app/menturn_og.png"],
   },
 }
 
