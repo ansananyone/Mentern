@@ -42,6 +42,7 @@ import {
   CheckCircle2,
   ClipboardList,
 } from "lucide-react"
+import { Spinner } from "@/components/ui/spinner"
 
 type Screen = "home" | "tasks" | "profile" | "help" | "mytasks"
 
@@ -374,7 +375,7 @@ function HomeScreen({
   if (loading) {
   return (
       <div className="min-h-full p-6 flex items-center justify-center">
-        <p className="text-lg text-muted-foreground">로딩 중...</p>
+        <Spinner className="size-8" />
       </div>
     )
   }
@@ -1030,7 +1031,7 @@ function TasksScreen({
   if (loading) {
   return (
       <div className="min-h-full p-6 flex items-center justify-center">
-        <p className="text-lg text-muted-foreground">로딩 중...</p>
+        <Spinner className="size-8" />
       </div>
   )
 }
@@ -1187,7 +1188,7 @@ function MyTasksScreen({
   if (loading) {
     return (
       <div className="min-h-full p-6 flex items-center justify-center">
-        <p className="text-lg text-muted-foreground">로딩 중...</p>
+        <Spinner className="size-8" />
       </div>
     )
   }
@@ -1361,7 +1362,7 @@ function ProfileScreen() {
   if (loading) {
   return (
       <div className="min-h-full p-6 flex items-center justify-center">
-        <p className="text-lg text-muted-foreground">로딩 중...</p>
+        <Spinner className="size-8" />
       </div>
     )
   }
