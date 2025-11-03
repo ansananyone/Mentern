@@ -4,7 +4,7 @@ import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://menturn.vercel.app'),
+  metadataBase: new URL('https://mentern.vercel.app'),
   title: "멘턴 - AI 시니어 파트너스",
   description: "시니어 전문가를 위한 안산시 AI 일자리 플랫폼",
   generator: "v0.app",
